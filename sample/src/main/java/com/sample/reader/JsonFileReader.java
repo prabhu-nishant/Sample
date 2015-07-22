@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
@@ -22,9 +23,9 @@ public class JsonFileReader implements SampleFileReader{
 		this.filepath = filepath;
 	}
 	
-	public Map readFile() throws FileReaderException{
+	public ConcurrentMap readFile() throws FileReaderException{
 		JsonNode rootNode = null;
-		Map<String,String> map = new ConcurrentHashMap<String,String>();
+		ConcurrentMap<String,String> map = new ConcurrentHashMap<String,String>();
 		
 		JsonFactory factory = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(factory);
@@ -48,9 +49,9 @@ public class JsonFileReader implements SampleFileReader{
 		return map;
 	}
 	
-	public ConcurrentHashMap<String,String> getJsonFields(JsonNode rootNode){
+	public ConcurrentMap<String,String> getJsonFields(JsonNode rootNode){
 		
-		ConcurrentHashMap<String,String> concurrentHashMap = new ConcurrentHashMap<String,String>(); 
+		ConcurrentMap<String,String> concurrentHashMap = new ConcurrentHashMap<String,String>(); 
 		
 		Iterator<Map.Entry<String,JsonNode>> fieldIterator = rootNode.getFields();
 		while(fieldIterator.hasNext()){
