@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.sample.exception.FileReaderException;
+import com.sample.util.Constants;
 
 public class CSVFileReader implements SampleFileReader{
 
@@ -22,8 +23,7 @@ public class CSVFileReader implements SampleFileReader{
 
 		BufferedReader reader = null;
 		String line = null;
-		String cvsSplitBy = ",";
-		String fieldSplitBy = ":";
+		
 		Map<String,String> map = new ConcurrentHashMap<String,String>();
 		
 		try {
@@ -31,11 +31,11 @@ public class CSVFileReader implements SampleFileReader{
 			reader = new BufferedReader(new FileReader(filepath));
 			while((line=reader.readLine())!=null){
 				
-				String[] fields = line.split(cvsSplitBy);
+				String[] fields = line.split(Constants.CVS_SPLIT_IDENTIFIER);
 				
 				for(String field:fields){
 					
-					String[] temp = field.split(fieldSplitBy);
+					String[] temp = field.split(Constants.FIELD_SPLIT_IDENTIFIER);
 					map.put(temp[0], temp[1]);
 				}
 			}
