@@ -43,12 +43,12 @@ public class CSVFileReader implements SampleFileReader{
 			
 		} catch (FileNotFoundException e) {
 			
-			FileReaderException ex = new FileReaderException(e.getMessage());
+			FileReaderException ex = new FileReaderException(e);
 			throw ex;
 			
 		} catch (IOException e) {
 			
-			FileReaderException ex = new FileReaderException(e.getMessage());
+			FileReaderException ex = new FileReaderException(e);
 			throw ex;
 		}
 		
