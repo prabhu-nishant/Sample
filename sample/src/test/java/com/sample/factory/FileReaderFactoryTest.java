@@ -8,7 +8,7 @@ public class FileReaderFactoryTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		
 	}
 
 }
