@@ -37,12 +37,12 @@ public class JsonFileReader implements SampleFileReader{
 		
 		} catch (JsonProcessingException e) {
 			
-			FileReaderException ex = new FileReaderException(e);
+			FileReaderException ex = new FileReaderException("Please ensure that Json file has been placed at the right location",e);
 			throw ex;
 			
 		} catch (IOException e) {
 			
-			FileReaderException ex = new FileReaderException(e);
+			FileReaderException ex = new FileReaderException("Exception while reading Json file",e);
 			throw ex;
 		}
 		

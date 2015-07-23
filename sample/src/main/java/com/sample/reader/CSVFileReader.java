@@ -43,12 +43,12 @@ public class CSVFileReader implements SampleFileReader{
 			
 		} catch (FileNotFoundException e) {
 			
-			FileReaderException ex = new FileReaderException(e);
+			FileReaderException ex = new FileReaderException("Please ensure that CSV file has been placed at the right location",e);
 			throw ex;
 			
 		} catch (IOException e) {
 			
-			FileReaderException ex = new FileReaderException(e);
+			FileReaderException ex = new FileReaderException("Exception while reading CSV file",e);
 			throw ex;
 		}
 		
