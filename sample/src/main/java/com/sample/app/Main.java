@@ -3,6 +3,8 @@ package com.sample.app;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentMap;
 
+import org.json.JSONObject;
+
 import com.sample.exception.FileReaderException;
 import com.sample.factory.FileReaderFactory;
 import com.sample.reader.SampleFileReader;
@@ -65,7 +67,7 @@ public class Main {
 									}	
 									else{
 										
-										throw new Exception("Please use existing attributes in the right hand side expression");
+										System.out.println("Please use existing attributes in the right hand side expression");
 									
 									}
 									
@@ -87,7 +89,7 @@ public class Main {
 							}
 							else{
 								
-								throw new Exception("Please first import the existing attributes file in memory");
+								System.out.println("Please first import the existing attributes file in memory");
 							}
 							
 						}catch (Exception e) {
@@ -95,6 +97,16 @@ public class Main {
 						}
 						break;
 				case 3: System.out.println("Exporting data....");
+						
+						if(map!=null && !map.isEmpty()){
+							
+							JSONObject json = new JSONObject(map);
+							
+						}
+						else{
+							System.out.println("There is no data to export.Please first import the existing attributes file in memory");
+						}
+				
 						break;
 				case 4:
 						System.exit(0);
