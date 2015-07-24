@@ -29,10 +29,10 @@ public class CSVFileReader implements SampleFileReader{
 		
 		try {
 			
-			reader = new BufferedReader(new FileReader(filepath));
+			reader = new BufferedReader(new FileReader(filepath.trim()));
 			while((line=reader.readLine())!=null){
 				
-				String[] fields = line.split(Constants.CVS_SPLIT_IDENTIFIER);
+				String[] fields = line.split(Constants.COMMA_IDENTIFIER);
 				
 				for(String field:fields){
 					

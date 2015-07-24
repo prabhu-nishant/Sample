@@ -32,7 +32,7 @@ public class JsonFileReader implements SampleFileReader{
 		try 
 		{
 		
-			rootNode = mapper.readTree(new File(filepath));
+			rootNode = mapper.readTree(new File(filepath.trim()));
 			map = getJsonFields(rootNode);
 		
 		} catch (JsonProcessingException e) {
