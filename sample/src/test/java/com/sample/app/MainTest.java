@@ -14,7 +14,7 @@ public class MainTest {
 	InputStream savedStandardInputStream;
 		
 	@Before
-	public void initialize(){
+	public void setUp(){
 		
 		systemUnderTest = new Main();
 		savedStandardInputStream = System.in;

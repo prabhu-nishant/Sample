@@ -43,7 +43,7 @@ public class JsonFileReader implements SampleFileReader{
 			
 		} catch (FileNotFoundException e) {
 			
-			FileReaderException ex = new FileReaderException("Please ensure that CSV file has been placed at the right location",e);
+			FileReaderException ex = new FileReaderException("Please ensure that Json file has been placed at the right location",e);
 			throw ex;
 			
 		} catch (IOException e) {

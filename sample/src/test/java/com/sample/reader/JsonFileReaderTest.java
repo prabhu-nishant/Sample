@@ -1,14 +1,33 @@
 package com.sample.reader;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
+
+import com.sample.exception.FileReaderException;
 
 public class JsonFileReaderTest {
 
-	@Test
-	public void test() {
+	public JsonFileReader systemUnderTest;
 	
+	@Test
+	public void testReadFile() throws FileReaderException {
+		
+		systemUnderTest = new JsonFileReader(getClass().getResource("/sample.json").getFile());
+		systemUnderTest.readFile();
+	}
+	
+	@Test(expected=FileReaderException.class)
+	public void testJsonProcessingException() throws FileReaderException {
+		
+		systemUnderTest = new JsonFileReader(getClass().getResource("/sampleError.json").getFile());
+		systemUnderTest.readFile();
+	}
+	
+	
+	@Test(expected=FileReaderException.class)
+	public void testFileNotFoundException() throws FileReaderException {
+	
+		systemUnderTest = new JsonFileReader(getClass().getResource("").toString());
+		systemUnderTest.readFile();
 	}
 
 }

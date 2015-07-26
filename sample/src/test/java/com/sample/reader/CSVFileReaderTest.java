@@ -1,14 +1,27 @@
 package com.sample.reader;
 
-import static org.junit.Assert.*;
+import java.net.URISyntaxException;
 
 import org.junit.Test;
 
+import com.sample.exception.FileReaderException;
+
 public class CSVFileReaderTest {
 
-	@Test
-	public void test() {
+	public CSVFileReader systemUnderTest;
 	
+	@Test
+	public void testReadFile() throws FileReaderException {
+		
+		systemUnderTest = new CSVFileReader(getClass().getResource("/sample.csv").getFile());
+		systemUnderTest.readFile();
+	}
+	
+	@Test(expected=FileReaderException.class)
+	public void testFileNotFoundException() throws FileReaderException {
+	
+		systemUnderTest = new CSVFileReader(getClass().getResource("").toString());
+		systemUnderTest.readFile();
 	}
 
 }

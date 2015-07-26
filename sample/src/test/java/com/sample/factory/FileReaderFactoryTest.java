@@ -14,19 +14,19 @@ public class FileReaderFactoryTest {
 	private FileReaderFactory systemUnderTest;
 	
 	@Before
-	public void initialize(){
+	public void setUp(){
 		systemUnderTest = new FileReaderFactory();
 	}
 	
 	@Test
 	public void testForCSVFile() throws FileReaderException {
-		SampleFileReader reader = systemUnderTest.getFileReaderFactory(".csv");
+		SampleFileReader reader = systemUnderTest.getFileReaderFactory(getClass().getResource("/sample.csv").getFile());
 		Assert.assertEquals(reader.getClass(), CSVFileReader.class);
 	}
 
 	@Test
 	public void testForJsonFile() throws FileReaderException {
-		SampleFileReader reader = systemUnderTest.getFileReaderFactory(".json");
+		SampleFileReader reader = systemUnderTest.getFileReaderFactory(getClass().getResource("/sample.json").getFile());
 		Assert.assertEquals(reader.getClass(), JsonFileReader.class);
 	}
 

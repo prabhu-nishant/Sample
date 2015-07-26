@@ -36,6 +36,7 @@ public class CSVFileReader implements SampleFileReader{
 				
 				for(String field:fields){
 					
+					System.out.println(field);
 					String[] temp = field.split(Constants.FIELD_SPLIT_IDENTIFIER);
 					map.putIfAbsent(temp[0], temp[1]);
 				}
