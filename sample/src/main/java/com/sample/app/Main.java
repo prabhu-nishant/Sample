@@ -1,8 +1,11 @@
 package com.sample.app;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentMap;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONObject;
 
 import com.sample.exception.FileReaderException;
@@ -74,7 +77,6 @@ public class Main {
 							
 								ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 								String evaluatedValue = expressionEvaluator.parseExpression(rightExp);
-								System.out.println("Evaluated value is "+evaluatedValue);
 								if(map.containsKey(leftExp)){
 							
 									map.replace(leftExp, evaluatedValue);
@@ -96,12 +98,23 @@ public class Main {
 							e.printStackTrace();
 						}
 						break;
-				case 3: System.out.println("Exporting data....");
-						
+				case 3: System.out.println("Enter folder path where the results need to be exported....");
+						input=userInput.nextLine();
 						if(map!=null && !map.isEmpty()){
 							
-							JSONObject json = new JSONObject(map);
+							ObjectMapper mapper = new ObjectMapper();
 							
+							try {
+								String json = mapper.writeValueAsString(map);
+								FileWriter fw = new FileWriter(input+"\\Output.json");
+								fw.write(json);
+								fw.flush();
+								fw.close();
+								
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 						else{
 							System.out.println("There is no data to export.Please first import the existing attributes file in memory");
@@ -112,11 +125,9 @@ public class Main {
 						System.exit(0);
 						break;
 				default:
-						System.out.println("You entered an invalid choice");
+						System.out.println("You have entered an invalid choice");
 			}
 		}while(choice != 4);
-
-			
 		
 	}
 }
