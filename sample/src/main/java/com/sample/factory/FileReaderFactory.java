@@ -11,7 +11,6 @@ public class FileReaderFactory {
 	public SampleFileReader getFileReaderFactory(String filePath) throws FileReaderException {
 		
 		SampleFileReader reader = null;
-		
 		if(filePath.endsWith(Constants.CSV_FILE_EXTENSION_VALUE)){
 			
 			reader = new CSVFileReader(filePath);

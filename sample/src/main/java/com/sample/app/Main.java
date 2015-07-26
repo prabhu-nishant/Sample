@@ -36,7 +36,7 @@ public class Main {
 
 			//Get user input
 			choice = userInput.nextInt();
-			userInput.nextLine();
+			System.out.println("");
 			switch(choice)
 			{
 				case 1: try {
