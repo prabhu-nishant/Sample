@@ -3,6 +3,7 @@ package com.sample.reader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,9 +25,9 @@ public class JsonFileReader implements SampleFileReader{
 		this.filepath = filepath;
 	}
 	
-	public ConcurrentMap readFile() throws FileReaderException{
+	public HashMap<String,String> readFile() throws FileReaderException{
 		JsonNode rootNode = null;
-		ConcurrentMap<String,String> map = new ConcurrentHashMap<String,String>();
+		HashMap<String,String> map = new HashMap<String,String>();
 		
 		JsonFactory factory = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(factory);
@@ -55,18 +56,18 @@ public class JsonFileReader implements SampleFileReader{
 		return map;
 	}
 	
-	public ConcurrentMap<String,String> getJsonFields(JsonNode rootNode){
+	public HashMap<String,String> getJsonFields(JsonNode rootNode){
 		
-		ConcurrentMap<String,String> concurrentHashMap = new ConcurrentHashMap<String,String>(); 
+		HashMap<String,String> map = new HashMap<String,String>(); 
 		
 		Iterator<Map.Entry<String,JsonNode>> fieldIterator = rootNode.getFields();
 		while(fieldIterator.hasNext()){
 			
 			Map.Entry<String,JsonNode> field = fieldIterator.next();
-			concurrentHashMap.putIfAbsent(field.getKey(), field.getValue().getTextValue());
+			map.putIfAbsent(field.getKey(), field.getValue().getTextValue());
 		}
 		
-		return concurrentHashMap;
+		return map;
 	}
 	
 

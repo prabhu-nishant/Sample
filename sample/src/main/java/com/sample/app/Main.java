@@ -2,6 +2,7 @@ package com.sample.app;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentMap;
 
@@ -20,7 +21,7 @@ public class Main {
 		
 		int choice = 0;
 		String input = null;
-		ConcurrentMap<String,String> map = null;
+		HashMap<String,String> map = null;
 		
 		Scanner userInput = new Scanner(System.in);
 		do

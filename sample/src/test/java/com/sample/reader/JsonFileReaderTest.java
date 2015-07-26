@@ -1,5 +1,6 @@
 package com.sample.reader;
 
+import org.junit.After;
 import org.junit.Test;
 
 import com.sample.exception.FileReaderException;
@@ -28,6 +29,12 @@ public class JsonFileReaderTest {
 	
 		systemUnderTest = new JsonFileReader(getClass().getResource("").toString());
 		systemUnderTest.readFile();
+	}
+	
+	@After
+	public void tearDown(){
+		
+	
 	}
 
 }

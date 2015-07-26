@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
@@ -19,12 +20,12 @@ public class CSVFileReader implements SampleFileReader{
 		this.filepath = filepath;
 	}
 	
-	public ConcurrentMap readFile() throws FileReaderException {
+	public HashMap<String,String> readFile() throws FileReaderException {
 
 		BufferedReader reader = null;
 		String line = null;
 		
-		ConcurrentMap<String,String> map = new ConcurrentHashMap<String,String>();
+		HashMap<String,String> map = new HashMap<String,String>();
 		
 		try {
 			

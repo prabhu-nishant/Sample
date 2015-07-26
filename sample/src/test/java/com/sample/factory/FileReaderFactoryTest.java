@@ -1,5 +1,6 @@
 package com.sample.factory;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -33,5 +34,11 @@ public class FileReaderFactoryTest {
 	@Test(expected=FileReaderException.class)
 	public void testForInValidFileType() throws FileReaderException {
 		SampleFileReader reader = systemUnderTest.getFileReaderFactory("ABCDEF");
+	}
+	
+	@After
+	public void tearDown(){
+		
+	
 	}
 }
