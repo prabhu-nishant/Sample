@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.concurrent.ConcurrentMap;
 
 import org.codehaus.jackson.map.ObjectMapper;
-import org.json.JSONObject;
 
 import com.sample.exception.FileReaderException;
 import com.sample.exception.ParseException;
