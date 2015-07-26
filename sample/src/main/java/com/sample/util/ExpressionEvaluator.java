@@ -8,36 +8,37 @@ public class ExpressionEvaluator {
 
 	public String parseExpression(String expression) throws ParseException{
 		
-		char[] tokens = expression.toCharArray();
+		Stack<Double> values = new Stack<Double>();
+		Stack<Character> operators = new Stack<Character>();
+		
+		try
+		{
+			char[] tokens = expression.toCharArray();
+			for (int i = 0; i < tokens.length; i++)
+			{
+				if (tokens[i] == ' ')
+					continue;
 
-       Stack<Double> values = new Stack<Double>();
-       Stack<Character> operators = new Stack<Character>();
-
-       for (int i = 0; i < tokens.length; i++)
-       {
-    	   if (tokens[i] == ' ')
-               continue;
-
-           if (tokens[i] >= '0' && tokens[i] <= '9')
-           {
-               StringBuffer sbuf = new StringBuffer();
-               while (i < tokens.length && ((tokens[i] >= '0' && tokens[i] <= '9') || tokens[i] == '.' )){
-                   sbuf.append(tokens[i++]);
-               }
-               values.push(Double.parseDouble(sbuf.toString()));
-           }
-           else if (tokens[i] == '('){
-        	   operators.push(tokens[i]);
-           }
-           else if (tokens[i] == ')')
-           {
-               while (operators.peek() != '('){
-            	 values.push(applyOp(operators.pop(), values.pop(), values.pop()));
-               }
-               operators.pop();
-           }
-           else if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/')
-           {
+				if (tokens[i] >= '0' && tokens[i] <= '9')
+				{
+					StringBuffer sbuf = new StringBuffer();
+					while (i < tokens.length && ((tokens[i] >= '0' && tokens[i] <= '9') || tokens[i] == '.' )){
+						sbuf.append(tokens[i++]);
+					}
+					values.push(Double.parseDouble(sbuf.toString()));
+				}
+				else if (tokens[i] == '('){
+					operators.push(tokens[i]);
+				}
+				else if (tokens[i] == ')')
+				{
+					while (operators.peek() != '('){
+            	   values.push(applyOp(operators.pop(), values.pop(), values.pop()));
+				}
+					operators.pop();
+			}
+			else if (tokens[i] == '+' || tokens[i] == '-' || tokens[i] == '*' || tokens[i] == '/')
+			{
                while (!operators.empty() && hasPrecedence(tokens[i], operators.peek())){
             	 values.push(applyOp(operators.pop(), values.pop(), values.pop()));
                }
@@ -48,7 +49,9 @@ public class ExpressionEvaluator {
        while (!operators.empty()){
     	   values.push(applyOp(operators.pop(), values.pop(), values.pop()));
        }
-
+	}catch(Exception e ){
+		throw new ParseException("Exception while parsing :",e);
+	}
        return Double.toString(values.pop());
    }
 
