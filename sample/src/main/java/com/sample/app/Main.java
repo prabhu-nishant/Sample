@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentMap;
 import org.json.JSONObject;
 
 import com.sample.exception.FileReaderException;
+import com.sample.exception.ParseException;
 import com.sample.factory.FileReaderFactory;
 import com.sample.reader.SampleFileReader;
 import com.sample.util.Constants;
@@ -33,23 +34,24 @@ public class Main {
 
 			//Get user input
 			choice = userInput.nextInt();
-		
+			userInput.nextLine();
 			switch(choice)
 			{
 				case 1: try {
 							System.out.println("Please enter JSON or CSV file path ");
-							input=userInput.next().trim();
+							input=userInput.nextLine().trim();
 							FileReaderFactory readerFactory = new FileReaderFactory();
 							SampleFileReader reader = readerFactory.getFileReaderFactory(input);
 						    map= reader.readFile();
 						} catch (FileReaderException e) {
 							System.out.println("Exception while reading the file :"+e);
+							e.printStackTrace();
 						}
 						
 						break;
 				case 2: try {
 							System.out.println("Please enter valid expression in the following format without space");
-							input=userInput.next();
+							input=userInput.nextLine();
 							String[] expression = input.split(Constants.EXPRESSION_SPLIT_IDENTIFIER);
 							String leftExp = expression[0].trim();
 							String rightExp = expression[1].trim();
@@ -60,22 +62,19 @@ public class Main {
 								
 								for(String s:existingAttr){
 									
-									if(s!=null && !s.isEmpty() && map.containsKey(s.trim())){
-										
-										rightExp = rightExp.replaceAll(s.trim(), map.get(s.trim()));
-										continue;
-									}	
-									else{
-										
-										System.out.println("Please use existing attributes in the right hand side expression");
+									if(s!=null && !s.isEmpty() && !s.equals("")){
 									
+										if(map.containsKey(s.trim())){
+														
+											rightExp = rightExp.replaceAll(s.trim(), map.get(s.trim()));
+											continue;
+										}
 									}
-									
 								}
 							
 								ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 								String evaluatedValue = expressionEvaluator.parseExpression(rightExp);
-							
+								System.out.println("Evaluated value is "+evaluatedValue);
 								if(map.containsKey(leftExp)){
 							
 									map.replace(leftExp, evaluatedValue);
@@ -92,8 +91,9 @@ public class Main {
 								System.out.println("Please first import the existing attributes file in memory");
 							}
 							
-						}catch (Exception e) {
-							System.out.println("Exception while evaluating the expression :"+e);
+						}catch (ParseException e) {
+							System.out.println("ParseException while evaluating the expression :"+e);
+							e.printStackTrace();
 						}
 						break;
 				case 3: System.out.println("Exporting data....");

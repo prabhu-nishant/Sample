@@ -1,6 +1,7 @@
 package com.sample.reader;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,7 +38,12 @@ public class JsonFileReader implements SampleFileReader{
 		
 		} catch (JsonProcessingException e) {
 			
-			FileReaderException ex = new FileReaderException("Please ensure that Json file has been placed at the right location",e);
+			FileReaderException ex = new FileReaderException("Exception while processing Json",e);
+			throw ex;
+			
+		} catch (FileNotFoundException e) {
+			
+			FileReaderException ex = new FileReaderException("Please ensure that CSV file has been placed at the right location",e);
 			throw ex;
 			
 		} catch (IOException e) {
