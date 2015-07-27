@@ -1,37 +1,64 @@
 package com.sample.app;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Scanner;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.sample.exception.FileReaderException;
+import com.sample.exception.ParseException;
 
 public class MainTest {
 
 	private Main systemUnderTest;
-	Scanner scanner;
-	InputStream savedStandardInputStream;
-		
+	
 	@Before
 	public void setUp(){
 		
 		systemUnderTest = new Main();
-		savedStandardInputStream = System.in;
-		scanner = new Scanner(System.in);
 	}
 		
 	
 	@Test
-	public void testForMenuChoice1() {
-		
-							
+	public void testForPopulateMap() throws FileReaderException {
+	
+		Map<String, String> map = systemUnderTest.populateMap(getClass().getResource("/sample.json").getFile());
+		Assert.assertTrue(map.equals(getMap()));
 	}
-
+	
+	@Test
+	public void testForEvaluateExpression() throws ParseException {
+	
+		Map<String, String> map = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",getMap());
+		Assert.assertEquals(map.get("area"),"11.55");
+	}
+	
+	@Test
+	public void testForExportData() throws ParseException {
+	
+		systemUnderTest.exportData("./target/test-classes",getMap());
+		File f = new File("./target/test-classes/Output.json");
+		Assert.assertTrue(f.exists());
+	}
+	
+	
 	@After
 	public void tearDown(){
 		
 	
+	}
+	
+	private Map<String, String> getMap(){
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("value", "10.2");
+		map.put("volume", "4");
+		return map;
+		
+		
 	}
 }
