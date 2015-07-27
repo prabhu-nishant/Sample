@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sample.exception.FileReaderException;
@@ -85,24 +87,33 @@ public class Main {
 	}
 
 	public void exportData(String input, Map<String, String> map) throws Exception {
+		
 		if(map!=null && !map.isEmpty()){
 			
 			ObjectMapper mapper = new ObjectMapper();
-			
+			String json;
 			try {
-				String json = mapper.writeValueAsString(map);
+				
+				json = mapper.writeValueAsString(map);
 				FileWriter fw = new FileWriter(input+"\\Output.json");
 				fw.write(json);
 				fw.flush();
 				fw.close();
 				
+			} catch (JsonGenerationException | JsonMappingException e) {
+			
+				throw new Exception("Exception while exporting data to a file",e);
+				
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				
+				throw new Exception("Exception while exporting data to a file",e);
+				
 			}
+			
 		}
 		else{
-			throw new Exception("There is no data to export.Please first import the existing attributes file in memory");
+			
+			throw new Exception("There is no data to export. Please first import the existing attributes file in memory");
 		}
 	}
 
