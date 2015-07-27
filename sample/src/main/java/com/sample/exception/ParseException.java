@@ -6,4 +6,8 @@ public class ParseException extends Exception{
 		super(string,e);
 	}
 	
+	public ParseException(String string){
+		super(string);
+	}
+	
 }

@@ -48,8 +48,8 @@ public class Main {
 			userInput.nextLine();
 			switch(Integer.parseInt(choice))
 			{
-				case 1: try {
-							System.out.println("Please enter JSON or CSV file path ");
+				case 1: System.out.println("Please enter JSON or CSV file path ");
+						try {
 							input=userInput.nextLine().trim();
 							map = populateMap(input);
 						} catch (FileReaderException e) {
@@ -58,8 +58,8 @@ public class Main {
 						}
 						
 						break;
-				case 2: try {
-							System.out.println("Please enter valid expression with space btween brackets and operators");
+				case 2: System.out.println("Please enter valid expression with space btween brackets and operators");
+						try {
 							input=userInput.nextLine();
 							evaluateExpression(input, map);
 							
@@ -69,8 +69,14 @@ public class Main {
 						}
 						break;
 				case 3: System.out.println("Enter folder path where the results need to be exported....");
-						input=userInput.nextLine();
-						exportData(input, map);
+						try {
+							input=userInput.nextLine();
+							exportData(input, map);
+							
+						} catch (Exception e) {
+							System.out.println("Exception while exporting data to a file :"+e);
+							e.printStackTrace();
+						}
 						break;
 				case 4:
 						System.exit(0);
@@ -81,7 +87,7 @@ public class Main {
 		}while(!choice.equals("4"));
 	}
 
-	public void exportData(String input, Map<String, String> map) {
+	public void exportData(String input, Map<String, String> map) throws Exception {
 		if(map!=null && !map.isEmpty()){
 			
 			ObjectMapper mapper = new ObjectMapper();
@@ -99,7 +105,7 @@ public class Main {
 			}
 		}
 		else{
-			System.out.println("There is no data to export.Please first import the existing attributes file in memory");
+			throw new Exception("There is no data to export.Please first import the existing attributes file in memory");
 		}
 	}
 
@@ -111,7 +117,7 @@ public class Main {
 		String temp = rightExp.replaceAll(Constants.NON_STRING_IDENTIFIER, Constants.COMMA_IDENTIFIER);
 		String existingAttr[] = temp.split(Constants.COMMA_IDENTIFIER);
 
-		if(map!=null){
+		if(map!=null && !map.isEmpty()){
 			
 			for(String s:existingAttr){
 				
@@ -131,7 +137,7 @@ public class Main {
 		}
 		else{
 			
-			System.out.println("Please first import the existing attributes file in memory");
+			throw new ParseException("Please first import the existing attributes file in memory");
 		}
 		return map;
 	}
