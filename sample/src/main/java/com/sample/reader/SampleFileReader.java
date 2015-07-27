@@ -8,6 +8,6 @@ import com.sample.exception.FileReaderException;
 
 public interface SampleFileReader {
 
-	public HashMap readFile() throws FileReaderException;
+	public Map<String, String> readFile() throws FileReaderException;
 	
 }

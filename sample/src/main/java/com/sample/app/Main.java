@@ -3,6 +3,7 @@ package com.sample.app;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.ConcurrentMap;
 
@@ -21,7 +22,7 @@ public class Main {
 		
 		int choice = 0;
 		String input = null;
-		HashMap<String,String> map = null;
+		Map<String,String> map = null;
 		
 		Scanner userInput = new Scanner(System.in);
 		do
@@ -37,7 +38,7 @@ public class Main {
 
 			//Get user input
 			choice = userInput.nextInt();
-			System.out.println("");
+			userInput.nextLine();
 			switch(choice)
 			{
 				case 1: try {
@@ -77,16 +78,7 @@ public class Main {
 							
 								ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
 								String evaluatedValue = expressionEvaluator.parseExpression(rightExp);
-								if(map.containsKey(leftExp)){
-							
-									map.replace(leftExp, evaluatedValue);
-							
-								}
-								else{
-							
-									map.put(leftExp, evaluatedValue);
-							
-								}
+								map.put(leftExp, evaluatedValue);
 							}
 							else{
 								

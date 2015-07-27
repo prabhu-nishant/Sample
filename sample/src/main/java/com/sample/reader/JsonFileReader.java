@@ -25,9 +25,9 @@ public class JsonFileReader implements SampleFileReader{
 		this.filepath = filepath;
 	}
 	
-	public HashMap<String,String> readFile() throws FileReaderException{
+	public Map<String,String> readFile() throws FileReaderException{
 		JsonNode rootNode = null;
-		HashMap<String,String> map = new HashMap<String,String>();
+		Map<String,String> map = new HashMap<String,String>();
 		
 		JsonFactory factory = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(factory);
@@ -64,7 +64,7 @@ public class JsonFileReader implements SampleFileReader{
 		while(fieldIterator.hasNext()){
 			
 			Map.Entry<String,JsonNode> field = fieldIterator.next();
-			map.putIfAbsent(field.getKey(), field.getValue().getTextValue());
+			map.put(field.getKey(), field.getValue().getTextValue());
 		}
 		
 		return map;
