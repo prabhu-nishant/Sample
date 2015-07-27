@@ -44,6 +44,13 @@ public class MainTest {
 		Assert.assertEquals(map.get("area"),"11.55");
 	}
 		
+	@Test(expected=ParseException.class)
+	public void testForEvaluateExpression_NullMap() throws ParseException {
+	
+		Map<String, String> map = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",null);
+		Assert.assertEquals(map.get("area"),"11.55");
+	}
+	
 	@Test
 	public void testForExportData() throws Exception {
 	
@@ -56,6 +63,14 @@ public class MainTest {
 	public void testForExportData_EmptyFile() throws Exception {
 	
 		systemUnderTest.exportData("./target/test-classes",new HashMap<String,String>());
+		File f = new File("./target/test-classes/Output.json");
+		Assert.assertTrue(f.exists());
+	}
+	
+	@Test(expected=Exception.class)
+	public void testForExportData_NullMap() throws Exception {
+	
+		systemUnderTest.exportData("./target/test-classes",null);
 		File f = new File("./target/test-classes/Output.json");
 		Assert.assertTrue(f.exists());
 	}

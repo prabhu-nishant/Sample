@@ -52,7 +52,10 @@ public class CSVFileReader implements SampleFileReader{
 			
 		} finally{
 			try {
-				reader.close();
+				
+				if(reader!=null){
+					reader.close();
+				}
 			
 			} catch (IOException e) {
 				
