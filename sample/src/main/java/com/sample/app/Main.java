@@ -32,7 +32,7 @@ public class Main {
 		Map<String,String> map = null;
 		
 		Scanner userInput = new Scanner(System.in);
-//		do
+		do
 		{
 			//Display our menu
 			System.out.println("\n*** Menu ***");
