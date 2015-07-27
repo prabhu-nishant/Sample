@@ -2,11 +2,8 @@ package com.sample.app;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.ConcurrentMap;
 
 import org.codehaus.jackson.map.ObjectMapper;
 

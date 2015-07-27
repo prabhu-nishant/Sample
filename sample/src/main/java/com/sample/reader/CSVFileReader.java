@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import com.sample.exception.FileReaderException;
 import com.sample.util.Constants;
@@ -51,6 +49,16 @@ public class CSVFileReader implements SampleFileReader{
 			
 			FileReaderException ex = new FileReaderException("Exception while reading CSV file",e);
 			throw ex;
+			
+		} finally{
+			try {
+				reader.close();
+			
+			} catch (IOException e) {
+				
+				FileReaderException ex = new FileReaderException("Exception while closing CSV file",e);
+				throw ex;
+			}
 		}
 		
 		return map;
