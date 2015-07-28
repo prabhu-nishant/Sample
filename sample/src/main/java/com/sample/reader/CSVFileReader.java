@@ -26,7 +26,7 @@ public class CSVFileReader implements SampleFileReader{
 		BufferedReader reader = null;
 		String line = null;
 		
-		List<Map<String, String>> listOfMap = new ArrayList();
+		List<Map<String, String>> listOfMap = new ArrayList<Map<String, String>>();
 		
 		try {
 			

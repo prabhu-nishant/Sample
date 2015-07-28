@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -38,21 +39,19 @@ public class MainTest {
 	public void testForEvaluateExpression() throws ParseException, JsonGenerationException, JsonMappingException, IOException {
 	
 		List<Map<String, String>> listOfMap = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",getMap());
-//		Assert.assertEquals(map.get("area"),"11.55");
+		Assert.assertTrue(listOfMap.equals(getResultMap()));
 	}
-//	
+	
 	@Test(expected=ParseException.class)
 	public void testForEvaluateExpression_EmptyFile() throws ParseException {
 	
-		List<Map<String, String>> map = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",new ArrayList());
-//		Assert.assertEquals(map.get("area"),"11.55");
+		List<Map<String, String>> map = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",new ArrayList<Map<String, String>>());
 	}
 		
 	@Test(expected=ParseException.class)
 	public void testForEvaluateExpression_NullMap() throws ParseException {
 	
-		List<Map<String, String>> map = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",new ArrayList());
-//		Assert.assertEquals(map.get("area"),"11.55");
+		List<Map<String, String>> map = systemUnderTest.evaluateExpression("area = ( value / volume ) + 9 ",new ArrayList<Map<String, String>>());
 	}
 	
 	@Test
@@ -66,7 +65,7 @@ public class MainTest {
 	@Test(expected=Exception.class)
 	public void testForExportData_EmptyFile() throws Exception {
 	
-		systemUnderTest.exportData("./target/test-classes",new ArrayList());
+		systemUnderTest.exportData("./target/test-classes",new ArrayList<Map<String, String>>());
 		File f = new File("./target/test-classes/Output.json");
 		Assert.assertTrue(f.exists());
 	}
@@ -88,7 +87,7 @@ public class MainTest {
 	
 	private List<Map<String,String>> getMap(){
 		
-		List<Map<String,String>> listOfMap = new ArrayList();
+		List<Map<String,String>> listOfMap = new ArrayList<Map<String, String>>();
 		
 		Map<String, String> map1 = new HashMap<String, String>();
 		map1.put("area", "10.2");
@@ -103,6 +102,25 @@ public class MainTest {
 		
 		return listOfMap;
 		
+	}
+	
+	private List<Map<String,String>> getResultMap(){
+		
+		List<Map<String,String>> listOfMap = new ArrayList<Map<String, String>>();
+		
+		Map<String, String> map1 = new HashMap<String, String>();
+		map1.put("area", "11.55");
+		map1.put("value", "10.2");
+		map1.put("volume", "4");
+		listOfMap.add(map1);
+		
+		Map<String, String> map2 = new HashMap<String, String>();
+		map2.put("area", "9.5");
+		map2.put("value", "2.5");
+		map2.put("volume", "5");
+		listOfMap.add(map2);
+		
+		return listOfMap;
 		
 	}
 }
