@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.sample.exception.FileReaderException;
@@ -19,25 +21,27 @@ public class CSVFileReader implements SampleFileReader{
 		this.filepath = filepath;
 	}
 	
-	public Map<String,String> readFile() throws FileReaderException {
+	public List<Map<String, String>> readFile() throws FileReaderException {
 
 		BufferedReader reader = null;
 		String line = null;
 		
-		Map<String,String> map = new HashMap<String,String>();
+		List<Map<String, String>> listOfMap = new ArrayList();
 		
 		try {
 			
+			Map<String,String> map = new HashMap<String,String>();
 			reader = new BufferedReader(new FileReader(filepath.trim()));
 			while((line=reader.readLine())!=null){
 				
 				String[] fields = line.split(Constants.COMMA_IDENTIFIER);
 				
-				for(String field:fields){
+				for(int i=0;i<fields.length;i=i+2){
 					
-					String[] temp = field.split(Constants.FIELD_SPLIT_IDENTIFIER);
-					map.put(temp[0], temp[1]);
+					map.put(fields[i], fields[i+1]);
 				}
+				
+				listOfMap.add(map);
 			}
 			
 		} catch (FileNotFoundException e) {
@@ -64,7 +68,7 @@ public class CSVFileReader implements SampleFileReader{
 			}
 		}
 		
-		return map;
+		return listOfMap;
 	}
 
 }

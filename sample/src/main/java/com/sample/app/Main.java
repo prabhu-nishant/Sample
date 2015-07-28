@@ -2,12 +2,14 @@ package com.sample.app;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 
 import com.sample.exception.FileReaderException;
 import com.sample.exception.ParseException;
@@ -28,7 +30,7 @@ public class Main {
 	public void process() {
 		String choice = null;
 		String input = null;
-		Map<String,String> map = null;
+		List<Map<String, String>> listOfMap = null;
 		
 		Scanner userInput = new Scanner(System.in);
 		do
@@ -50,7 +52,7 @@ public class Main {
 				case 1: System.out.println("Please enter JSON or CSV file path ");
 						try {
 							input=userInput.nextLine().trim();
-							map = populateMap(input);
+							listOfMap = populateMap(input);
 						} catch (FileReaderException e) {
 							System.out.println("Exception while reading the file :"+e);
 							e.printStackTrace();
@@ -60,7 +62,7 @@ public class Main {
 				case 2: System.out.println("Please enter valid expression with space btween brackets and operators");
 						try {
 							input=userInput.nextLine();
-							evaluateExpression(input, map);
+							evaluateExpression(input, listOfMap);
 							
 						}catch (ParseException e) {
 							System.out.println("ParseException while evaluating the expression :"+e);
@@ -70,7 +72,7 @@ public class Main {
 				case 3: System.out.println("Enter folder path where the results need to be exported....");
 						try {
 							input=userInput.nextLine();
-							exportData(input, map);
+							exportData(input, listOfMap);
 							
 						} catch (Exception e) {
 							System.out.println("Exception while exporting data to a file :"+e);
@@ -86,15 +88,16 @@ public class Main {
 		}while(!choice.equals("4"));
 	}
 
-	public void exportData(String input, Map<String, String> map) throws Exception {
+	public void exportData(String input, List<Map<String, String>> listOfMap) throws Exception {
 		
-		if(map!=null && !map.isEmpty()){
+		if(listOfMap!=null && !listOfMap.isEmpty()){
 			
 			ObjectMapper mapper = new ObjectMapper();
 			String json;
 			try {
 				
-				json = mapper.writeValueAsString(map);
+				ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+				json = ow.writeValueAsString(listOfMap);
 				FileWriter fw = new FileWriter(input+"\\Output.json");
 				fw.write(json);
 				fw.flush();
@@ -117,45 +120,55 @@ public class Main {
 		}
 	}
 
-	public Map<String, String> evaluateExpression(String input, Map<String, String> map) throws ParseException {
+	public List<Map<String, String>> evaluateExpression(String input, List<Map<String, String>> listOfMap) throws ParseException {
 		
 		String[] expression = input.split(Constants.EXPRESSION_SPLIT_IDENTIFIER);
-		String leftExp = expression[0].trim();
-		String rightExp = expression[1].trim();
-		String temp = rightExp.replaceAll(Constants.NON_STRING_IDENTIFIER, Constants.COMMA_IDENTIFIER);
-		String existingAttr[] = temp.split(Constants.COMMA_IDENTIFIER);
-
-		if(map!=null && !map.isEmpty()){
+		
+		if(listOfMap!=null && !listOfMap.isEmpty()){
+		
+			for(Map<String,String> map : listOfMap){
 			
-			for(String s:existingAttr){
+				String leftExp = expression[0].trim();
+				String rightExp = expression[1].trim();
+				String temp = rightExp.replaceAll(Constants.NON_STRING_IDENTIFIER, Constants.COMMA_IDENTIFIER);
+				String existingAttr[] = temp.split(Constants.COMMA_IDENTIFIER);
+			
+			
+				if(map!=null && !map.isEmpty()){
 				
-				if(s!=null && !s.isEmpty() && !s.equals("")){
+					for(String s:existingAttr){
+					
+						if(s!=null && !s.isEmpty() && !s.equals("") && map.containsKey(s.trim())){
+					
+							rightExp = rightExp.replaceAll(s.trim(), map.get(s.trim()));
+							continue;
+						}
+				}
+			
+					ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
+					String evaluatedValue = expressionEvaluator.parseExpression(rightExp);
+					map.put(leftExp, evaluatedValue);
+				}
+				else{
 				
-					if(map.containsKey(s.trim())){
-									
-						rightExp = rightExp.replaceAll(s.trim(), map.get(s.trim()));
-						continue;
-					}
+					throw new ParseException("Please first import the existing attributes file in memory");
 				}
 			}
-		
-			ExpressionEvaluator expressionEvaluator = new ExpressionEvaluator();
-			String evaluatedValue = expressionEvaluator.parseExpression(rightExp);
-			map.put(leftExp, evaluatedValue);
 		}
 		else{
 			
 			throw new ParseException("Please first import the existing attributes file in memory");
+			
 		}
-		return map;
+		return listOfMap;
 	}
 
-	public Map<String, String> populateMap(String input) throws FileReaderException {
+	public List<Map<String, String>> populateMap(String input) throws FileReaderException {
 		
-		Map<String, String> map;
+		List<Map<String, String>> listOfMap;
 		FileReaderFactory readerFactory = new FileReaderFactory();
 		SampleFileReader reader = readerFactory.getFileReaderFactory(input);
-		map= reader.readFile();
-		return map;
+		listOfMap = reader.readFile();
+		return listOfMap;
 	}
 }

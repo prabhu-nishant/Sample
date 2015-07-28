@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonFactory;
@@ -23,18 +24,15 @@ public class JsonFileReader implements SampleFileReader{
 		this.filepath = filepath;
 	}
 	
-	public Map<String,String> readFile() throws FileReaderException{
-		JsonNode rootNode = null;
-		Map<String,String> map = new HashMap<String,String>();
-		
+	public List<Map<String, String>> readFile() throws FileReaderException{
 		JsonFactory factory = new JsonFactory();
 		ObjectMapper mapper = new ObjectMapper(factory);
 		try 
 		{
 		
-			rootNode = mapper.readTree(new File(filepath.trim()));
-			map = getJsonFields(rootNode);
-		
+			List<Map<String,String>> listOfMap = mapper.readValue(new File(filepath.trim()),mapper.getTypeFactory().constructCollectionType(List.class, HashMap.class));
+			return listOfMap;
+			
 		} catch (JsonProcessingException e) {
 			
 			FileReaderException ex = new FileReaderException("Exception while processing Json",e);
@@ -50,23 +48,7 @@ public class JsonFileReader implements SampleFileReader{
 			FileReaderException ex = new FileReaderException("Exception while reading Json file",e);
 			throw ex;
 		}
-		
-		return map;
+	
 	}
 	
-	public HashMap<String,String> getJsonFields(JsonNode rootNode){
-		
-		HashMap<String,String> map = new HashMap<String,String>(); 
-		
-		Iterator<Map.Entry<String,JsonNode>> fieldIterator = rootNode.getFields();
-		while(fieldIterator.hasNext()){
-			
-			Map.Entry<String,JsonNode> field = fieldIterator.next();
-			map.put(field.getKey(), field.getValue().getTextValue());
-		}
-		
-		return map;
-	}
-	
-
 }
