@@ -8,9 +8,11 @@ import com.sample.util.Constants;
 
 public class FileReaderFactory {
 	
+	private SampleFileReader reader = null;
+	
 	public SampleFileReader getFileReaderFactory(String filePath) throws FileReaderException {
 		
-		SampleFileReader reader = null;
+		
 		if(filePath.endsWith(Constants.CSV_FILE_EXTENSION_VALUE)){
 			
 			reader = new CSVFileReader(filePath);
