@@ -28,7 +28,7 @@ public class Main {
 	}
 
 	public void process() {
-		String choice = null;
+		int choice;
 		String input = null;
 		List<Map<String, String>> listOfMap = null;
 		
@@ -45,9 +45,9 @@ public class Main {
 			System.out.println("Please enter your choice:");
 
 			//Get user input
-			choice = userInput.nextLine();
+			choice = userInput.nextInt();
 			userInput.nextLine();
-			switch(Integer.parseInt(choice))
+			switch(choice)
 			{
 				case 1: System.out.println("Please enter JSON or CSV file path ");
 						try {
@@ -59,7 +59,7 @@ public class Main {
 						}
 						
 						break;
-				case 2: System.out.println("Please enter valid expression with space btween brackets and operators");
+				case 2: System.out.println("Please enter valid expression with space between words,brackets and operators");
 						try {
 							input=userInput.nextLine();
 							evaluateExpression(input, listOfMap);
@@ -85,7 +85,7 @@ public class Main {
 				default:
 						System.out.println("You have entered an invalid choice");
 			}
-		}while(!choice.equals("4"));
+		}while(choice!= 4);
 	}
 
 	public void exportData(String input, List<Map<String, String>> listOfMap) throws Exception {
