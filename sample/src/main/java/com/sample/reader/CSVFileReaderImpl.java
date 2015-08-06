@@ -1,9 +1,13 @@
 package com.sample.reader;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,7 +36,7 @@ public class CSVFileReaderImpl implements SampleFileReader{
 			
 			map = new HashMap<String,String>();
 			listOfMap = new ArrayList<Map<String, String>>();
-			reader = new BufferedReader(new FileReader(filepath.trim()));
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(filepath),"UTF-8"));
 			while((line=reader.readLine())!=null){
 				
 				String[] fields = line.split(Constants.COMMA_IDENTIFIER);

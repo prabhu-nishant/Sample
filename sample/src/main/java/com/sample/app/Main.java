@@ -1,7 +1,12 @@
 package com.sample.app;
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -32,7 +37,15 @@ public class Main {
 		String input = null;
 		List<Map<String, String>> listOfMap = null;
 		
-		Scanner userInput = new Scanner(System.in);
+		Scanner userInput = null;
+		try {
+			
+			userInput = new Scanner(new InputStreamReader(System.in, "UTF-8"));
+		
+		} catch (UnsupportedEncodingException e) {
+			System.out.println("Exception while reading the input :"+e);
+			e.printStackTrace();
+		}
 		do
 		{
 			//Display our menu
@@ -97,7 +110,7 @@ public class Main {
 				
 				ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
 				json = ow.writeValueAsString(listOfMap);
-				FileWriter fw = new FileWriter(input+"\\Output.json");
+				BufferedWriter fw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(input+"\\Output.json"),"UTF-8"));
 				fw.write(json);
 				fw.flush();
 				fw.close();
