@@ -92,7 +92,6 @@ public class Main {
 		
 		if(listOfMap!=null && !listOfMap.isEmpty()){
 			
-			ObjectMapper mapper = new ObjectMapper();
 			String json;
 			try {
 				
