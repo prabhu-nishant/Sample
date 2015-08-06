@@ -25,12 +25,13 @@ public class CSVFileReaderImpl implements SampleFileReader{
 
 		BufferedReader reader = null;
 		String line = null;
-		
-		List<Map<String, String>> listOfMap = new ArrayList<Map<String, String>>();
+		Map<String,String> map = null;
+		List<Map<String, String>> listOfMap = null;
 		
 		try {
 			
-			Map<String,String> map = new HashMap<String,String>();
+			map = new HashMap<String,String>();
+			listOfMap = new ArrayList<Map<String, String>>();
 			reader = new BufferedReader(new FileReader(filepath.trim()));
 			while((line=reader.readLine())!=null){
 				
@@ -46,7 +47,7 @@ public class CSVFileReaderImpl implements SampleFileReader{
 			
 		} catch (FileNotFoundException e) {
 			
-			FileReaderException ex = new FileReaderException("Please ensure that CSV file has been placed at the right location",e);
+			FileReaderException ex = new FileReaderException("Please ensure that CSV file is placed at the right location",e);
 			throw ex;
 			
 		} catch (IOException e) {
@@ -59,6 +60,7 @@ public class CSVFileReaderImpl implements SampleFileReader{
 				
 				if(reader!=null){
 					reader.close();
+					reader = null;
 				}
 			
 			} catch (IOException e) {

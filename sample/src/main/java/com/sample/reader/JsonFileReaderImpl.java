@@ -40,7 +40,7 @@ public class JsonFileReaderImpl implements SampleFileReader{
 			
 		} catch (FileNotFoundException e) {
 			
-			FileReaderException ex = new FileReaderException("Please ensure that Json file has been placed at the right location",e);
+			FileReaderException ex = new FileReaderException("Please ensure that Json file is placed at the right location",e);
 			throw ex;
 			
 		} catch (IOException e) {
