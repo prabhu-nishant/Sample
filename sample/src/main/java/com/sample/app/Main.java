@@ -122,7 +122,14 @@ public class Main {
 
 	public List<Map<String, String>> evaluateExpression(String input, List<Map<String, String>> listOfMap) throws ParseException {
 		
-		String[] expression = input.split(Constants.EXPRESSION_SPLIT_IDENTIFIER);
+		String[] expression = null;
+		
+		if(input!=null && !("").equals(input)){
+			expression = input.split(Constants.EXPRESSION_SPLIT_IDENTIFIER);
+		}
+		else{
+			throw new ParseException("InValid expression");
+		}
 		
 		if(listOfMap!=null && !listOfMap.isEmpty()){
 		
