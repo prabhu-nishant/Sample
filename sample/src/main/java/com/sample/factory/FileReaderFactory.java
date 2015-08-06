@@ -1,8 +1,8 @@
 package com.sample.factory;
 
 import com.sample.exception.FileReaderException;
-import com.sample.reader.CSVFileReader;
-import com.sample.reader.JsonFileReader;
+import com.sample.reader.CSVFileReaderImpl;
+import com.sample.reader.JsonFileReaderImpl;
 import com.sample.reader.SampleFileReader;
 import com.sample.util.Constants;
 
@@ -13,14 +13,14 @@ public class FileReaderFactory {
 	public SampleFileReader getFileReaderFactory(String filePath) throws FileReaderException {
 		
 		
-		if(filePath.endsWith(Constants.CSV_FILE_EXTENSION_VALUE)){
+		if(filePath!=null && filePath.endsWith(Constants.CSV_FILE_EXTENSION_VALUE)){
 			
-			reader = new CSVFileReader(filePath);
+			reader = new CSVFileReaderImpl(filePath);
 			
 		}
-		else if (filePath.endsWith(Constants.JSON_FILE_EXTENSION_VALUE)){
+		else if (filePath!=null && filePath.endsWith(Constants.JSON_FILE_EXTENSION_VALUE)){
 			
-			reader = new JsonFileReader(filePath);
+			reader = new JsonFileReaderImpl(filePath);
 		}
 		else{
 			

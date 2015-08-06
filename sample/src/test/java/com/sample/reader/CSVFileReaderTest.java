@@ -9,19 +9,19 @@ import com.sample.exception.FileReaderException;
 
 public class CSVFileReaderTest {
 
-	public CSVFileReader systemUnderTest;
+	public CSVFileReaderImpl systemUnderTest;
 	
 	@Test
 	public void testReadFile() throws FileReaderException {
 		
-		systemUnderTest = new CSVFileReader(getClass().getResource("/sample.csv").getFile());
+		systemUnderTest = new CSVFileReaderImpl(getClass().getResource("/sample.csv").getFile());
 		systemUnderTest.readFile();
 	}
 	
 	@Test(expected=FileReaderException.class)
 	public void testFileNotFoundException() throws FileReaderException {
 	
-		systemUnderTest = new CSVFileReader(getClass().getResource("").toString());
+		systemUnderTest = new CSVFileReaderImpl(getClass().getResource("").toString());
 		systemUnderTest.readFile();
 	}
 	

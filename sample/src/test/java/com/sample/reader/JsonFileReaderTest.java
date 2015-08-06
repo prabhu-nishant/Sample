@@ -7,19 +7,19 @@ import com.sample.exception.FileReaderException;
 
 public class JsonFileReaderTest {
 
-	public JsonFileReader systemUnderTest;
+	public JsonFileReaderImpl systemUnderTest;
 	
 	@Test
 	public void testReadFile() throws FileReaderException {
 		
-		systemUnderTest = new JsonFileReader(getClass().getResource("/sample.json").getFile());
+		systemUnderTest = new JsonFileReaderImpl(getClass().getResource("/sample.json").getFile());
 		systemUnderTest.readFile();
 	}
 	
 	@Test(expected=FileReaderException.class)
 	public void testJsonProcessingException() throws FileReaderException {
 		
-		systemUnderTest = new JsonFileReader(getClass().getResource("/sampleError.json").getFile());
+		systemUnderTest = new JsonFileReaderImpl(getClass().getResource("/sampleError.json").getFile());
 		systemUnderTest.readFile();
 	}
 	
@@ -27,7 +27,7 @@ public class JsonFileReaderTest {
 	@Test(expected=FileReaderException.class)
 	public void testFileNotFoundException() throws FileReaderException {
 	
-		systemUnderTest = new JsonFileReader(getClass().getResource("").toString());
+		systemUnderTest = new JsonFileReaderImpl(getClass().getResource("").toString());
 		systemUnderTest.readFile();
 	}
 	

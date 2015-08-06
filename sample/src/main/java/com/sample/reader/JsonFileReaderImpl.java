@@ -15,11 +15,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sample.exception.FileReaderException;
 
-public class JsonFileReader implements SampleFileReader{
+public class JsonFileReaderImpl implements SampleFileReader{
 
 	private String filepath ;
 	
-	public JsonFileReader (String filepath){
+	public JsonFileReaderImpl (String filepath){
 		
 		this.filepath = filepath;
 	}

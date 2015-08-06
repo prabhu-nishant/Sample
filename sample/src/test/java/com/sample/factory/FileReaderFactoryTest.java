@@ -6,8 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sample.exception.FileReaderException;
-import com.sample.reader.CSVFileReader;
-import com.sample.reader.JsonFileReader;
+import com.sample.reader.CSVFileReaderImpl;
+import com.sample.reader.JsonFileReaderImpl;
 import com.sample.reader.SampleFileReader;
 
 public class FileReaderFactoryTest {
@@ -22,13 +22,13 @@ public class FileReaderFactoryTest {
 	@Test
 	public void testForCSVFile() throws FileReaderException {
 		SampleFileReader reader = systemUnderTest.getFileReaderFactory(getClass().getResource("/sample.csv").getFile());
-		Assert.assertEquals(reader.getClass(), CSVFileReader.class);
+		Assert.assertEquals(reader.getClass(), CSVFileReaderImpl.class);
 	}
 
 	@Test
 	public void testForJsonFile() throws FileReaderException {
 		SampleFileReader reader = systemUnderTest.getFileReaderFactory(getClass().getResource("/sample.json").getFile());
-		Assert.assertEquals(reader.getClass(), JsonFileReader.class);
+		Assert.assertEquals(reader.getClass(), JsonFileReaderImpl.class);
 	}
 
 	@Test(expected=FileReaderException.class)

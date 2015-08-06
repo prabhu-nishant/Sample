@@ -12,11 +12,11 @@ import java.util.Map;
 import com.sample.exception.FileReaderException;
 import com.sample.util.Constants;
 
-public class CSVFileReader implements SampleFileReader{
+public class CSVFileReaderImpl implements SampleFileReader{
 
 	private String filepath ;
 	
-	public CSVFileReader(String filepath){
+	public CSVFileReaderImpl(String filepath){
 		
 		this.filepath = filepath;
 	}
