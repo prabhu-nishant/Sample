@@ -38,14 +38,7 @@ public class Main {
 		List<Map<String, String>> listOfMap = null;
 		
 		Scanner userInput = null;
-		try {
-			
-			userInput = new Scanner(new InputStreamReader(System.in, "UTF-8"));
-		
-		} catch (UnsupportedEncodingException e) {
-			System.out.println("Exception while reading the input :"+e);
-			e.printStackTrace();
-		}
+		userInput = new Scanner(System.in);
 		do
 		{
 			//Display our menu
